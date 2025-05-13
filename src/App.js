@@ -165,9 +165,17 @@ function App() {
         <div className={`max-w-md w-full rounded-xl shadow-lg p-4 border animate-fade-in ${darkMode ? 'bg-gray-800 border-green-700' : 'bg-white border-lettuce'}`}>
           <h2 className="text-2xl font-header text-ketchup mb-2 text-center">{restaurant.name}</h2>
           <p className="text-md text-center">⭐ {restaurant.rating || "N/A"}</p>
-          <p className="text-sm text-center mb-3">📍 {restaurant.vicinity || "Unknown address"}</p>
+          <p className="text-sm text-center mb-1">📍 {restaurant.vicinity || "Unknown address"}</p>
+          {restaurant.opening_hours?.open_now !== undefined && (
+            <p className={`text-center font-semibold ${restaurant.opening_hours.open_now ? 'text-green-500' : 'text-red-500'}`}>
+              {restaurant.opening_hours.open_now ? '🟢 Open now' : '🔴 Closed now'}
+            </p>
+          )}
+          {restaurant.price_level !== undefined && (
+            <p className="text-center text-yellow-600">💰 {"$".repeat(restaurant.price_level)}</p>
+          )}
 
-          <div className="flex flex-col sm:flex-row gap-2 justify-center">
+          <div className="flex flex-col sm:flex-row gap-2 justify-center mt-3">
             <a
               href={`https://www.google.com/maps/search/?api=1&query=${restaurant.geometry.location.lat()},${restaurant.geometry.location.lng()}`}
               target="_blank"
